@@ -893,7 +893,7 @@ const inl = s => esc(s)
   .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g,(m,a,t)=>`<a href="#/${a.replace('#','/')}">${t}</a>`)
   .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>').replace(/\n/g,'<br>');
 const plain = s => String(s).replace(/\[\[[^\]|]+\|([^\]]+)\]\]/g,'$1').replace(/\*\*(.+?)\*\*/g,'$1').replace(/==(.+?)==/g,'$1').replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g,'$1 ($2)');
-const tx = o => typeof o==='string' ? o : Array.isArray(o) ? o.map(tx).join(' ') : o&&typeof o==='object' ? Object.entries(o).filter(([k])=>!['t','id','url','to','copy','side'].includes(k)).map(([,v])=>tx(v)).join(' ') : '';
+const tx = o => typeof o==='string' ? o : Array.isArray(o) ? o.map(tx).join(' ') : o&&typeof o==='object' ? Object.entries(o).filter(([k])=>!['t','id','url','to','copy','side'].includes(k)&&k[0]!=='_').map(([,v])=>tx(v)).join(' ') : '';
 const COPY = [];
 const cbtn = (text,label) => { COPY.push(text); return `<button class="btn cp" data-c="${COPY.length-1}">▸ ${label||'Скопировать'}</button>`; };
 
